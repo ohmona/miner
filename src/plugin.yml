@@ -1,0 +1,5 @@
+name: miner
+version: 1.0.0
+main: com.ohmona.miner.Main
+author: ohmona
+api-version: 1.13
