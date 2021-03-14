@@ -22,15 +22,15 @@ public class CreateSpawn {
             }
         }
         // lantern save system
-        new Location(w, 0, 19,0).getBlock().setType(Material.BARRIER);
-        new Location(w, 0, 18,0).getBlock().setType(Material.SEA_LANTERN);
-        for(int i = -1; i <= 1; i += 2) {
-            for(int j = -1; j <= 1; j += 2) {
+        for(int i = -1; i <= 1; i++) {
+            for(int j = -1; j <= 1; j++) {
                 for(int k = 17; k <= 19; k++) {
                     new Location(w, i, k ,j).getBlock().setType(Material.BEDROCK);
                 }
             }
         }
+        new Location(w, 0, 19,0).getBlock().setType(Material.BARRIER);
+        new Location(w, 0, 18,0).getBlock().setType(Material.SEA_LANTERN);
 
         // create oak fance
         new Location(w, -1, 20, -2).getBlock().setType(Material.OAK_FENCE);
@@ -105,15 +105,15 @@ public class CreateSpawn {
             }
         }
         // lantern save system
-        new Location(w, 0, 19,0).getBlock().setType(Material.BARRIER);
-        new Location(w, 0, 18,0).getBlock().setType(Material.SEA_LANTERN);
-        for(int i = -1; i <= 1; i += 2) {
-            for(int j = -1; j <= 1; j += 2) {
+        for(int i = -1; i <= 1; i++) {
+            for(int j = -1; j <= 1; j++) {
                 for(int k = 17; k <= 19; k++) {
                     new Location(w, i, k ,j).getBlock().setType(Material.BEDROCK);
                 }
             }
         }
+        new Location(w, 0, 19,0).getBlock().setType(Material.BARRIER);
+        new Location(w, 0, 18,0).getBlock().setType(Material.SEA_LANTERN);
 
         //create oak slabs
         new Location(w, 2, 20 ,-1).getBlock().setType(Material.OAK_SLAB);
@@ -207,6 +207,16 @@ public class CreateSpawn {
         sign.setLine(2, "block in this are");
         sign.setLine(3, "can be removed");
         sign.update();
+        // lantern save system
+        new Location(w, 0, 19,0).getBlock().setType(Material.BARRIER);
+        new Location(w, 0, 18,0).getBlock().setType(Material.SEA_LANTERN);
+        for(int i = -1; i <= 1; i += 2) {
+            for(int j = -1; j <= 1; j += 2) {
+                for(int k = 17; k <= 19; k++) {
+                    new Location(w, i, k ,j).getBlock().setType(Material.BEDROCK);
+                }
+            }
+        }
     }
 
 }
