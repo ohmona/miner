@@ -14,8 +14,6 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.Potion;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class Main extends JavaPlugin {
@@ -131,7 +129,27 @@ public class Main extends JavaPlugin {
         potionRecipe2.setIngredient('s', Material.ENDER_PEARL);
         potionRecipe2.setIngredient('g', Material.GOLD_BLOCK);
 
+        /*
+        *   Clean Zone
+         */
+        ItemStack cleanZone = new ItemStack(Material.LIME_CONCRETE);
+        ItemMeta cleanZoneMeta = cleanZone.getItemMeta();
 
+        cleanZoneMeta.setDisplayName(ChatColor.GREEN + "clean zone");
+        cleanZoneMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 10, true);
+        cleanZone.setItemMeta(cleanZoneMeta);
+
+        ShapedRecipe cleanZoneRecipe = new ShapedRecipe(cleanZone);
+        cleanZoneRecipe.shape("eod","ogo","mon");
+        cleanZoneRecipe.setIngredient('o', Material.OBSIDIAN);
+        cleanZoneRecipe.setIngredient('e', Material.ENDER_EYE);
+        cleanZoneRecipe.setIngredient('d', Material.DIAMOND_ORE);
+        cleanZoneRecipe.setIngredient('g', Material.GHAST_TEAR);
+        cleanZoneRecipe.setIngredient('m', Material.MILK_BUCKET);
+        cleanZoneRecipe.setIngredient('n', Material.NAUTILUS_SHELL);
+
+
+        getServer().addRecipe(cleanZoneRecipe);
         getServer().addRecipe(potionRecipe);
         getServer().addRecipe(potionRecipe1);
         getServer().addRecipe(potionRecipe2);

@@ -4,9 +4,17 @@ import com.ohmona.miner.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -59,6 +67,65 @@ public class HeightSystem implements Listener {
         }
     }
 
+    @EventHandler
+    public void onCleanZonePleace(BlockPlaceEvent e) {
+        Player p = e.getPlayer();
+        Block b = e.getBlockPlaced();
+
+        if(b.getType().equals(Material.LIME_CONCRETE)) {
+            World w = p.getWorld();
+            Location loc = b.getLocation();
+            double x = loc.getX();
+            double y = loc.getY();
+            double z = loc.getZ();
+
+            Entity armorStand;
+
+            armorStand = w.spawnEntity(new Location(w, x + 0.5, y + 3, z + 0.5), EntityType.ARMOR_STAND);
+            if (armorStand instanceof ArmorStand) {
+                ((ArmorStand) armorStand).setVisible(false);
+                armorStand.setGravity(false);
+                ((ArmorStand) armorStand).setSmall(true);
+                armorStand.setCustomName("CleanZoneArmorStand");
+            }
+        }
+    }
+
+    @EventHandler
+    public void onCleanZoneDestroy(BlockBreakEvent e) {
+        Player p = e.getPlayer();
+        Block b = e.getBlock();
+
+        if(b.getType().equals(Material.LIME_CONCRETE)) {
+
+            ItemStack cleanZone = new ItemStack(Material.LIME_CONCRETE);
+            ItemMeta cleanZoneMeta = cleanZone.getItemMeta();
+
+            cleanZoneMeta.setDisplayName(ChatColor.GREEN + "clean zone");
+            cleanZoneMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 10, true);
+            cleanZone.setItemMeta(cleanZoneMeta);
+            e.setDropItems(false);
+
+            World w = p.getWorld();
+            Location loc = b.getLocation();
+            double x = loc.getX();
+            double y = loc.getY();
+            double z = loc.getZ();
+            Location armorStandLocation = new Location(w, x + 0.5, y + 3, z + 0.5);
+
+            w.dropItemNaturally(loc, cleanZone);
+
+            Entity armorStand;
+
+            for(Entity entity : w.getNearbyEntities(armorStandLocation, 0.5, 0.5, 0.5)) {
+                if(entity instanceof ArmorStand) {
+                    armorStand = entity;
+                    armorStand.remove();
+                }
+            }
+        }
+    }
+
     public void defaultProtectionSystem(Player p) {
         {
             // helmet system
@@ -91,7 +158,11 @@ public class HeightSystem implements Listener {
                         p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 1000, 3));
                         p.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 1000, 3));
                     }
-                } else if (getTypeOfProtection(p) == 2) {
+                }
+                else if (getTypeOfProtection(p) == 2) {
+                    removeEffect(p);
+                }
+                else if (getTypeOfProtection(p) == 3) {
                     removeEffect(p);
                 }
                 // 디버그, 원래는 아이템 설명에 쓰기
@@ -120,6 +191,11 @@ public class HeightSystem implements Listener {
         else if (p.hasPotionEffect(PotionEffectType.LUCK)) {
             return true;
         }
+        for(Entity entity : p.getNearbyEntities(3.5, 2,3.5)) {
+            if(entity instanceof ArmorStand) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -141,9 +217,19 @@ public class HeightSystem implements Listener {
             else if (p.hasPotionEffect(PotionEffectType.LUCK)) {
                 return 2;
             }
+            for(Entity entity : p.getNearbyEntities(3.5, 2,3.5)) {
+                if(entity instanceof ArmorStand) {
+                    return 3;
+                }
+            }
         }
         else if (p.hasPotionEffect(PotionEffectType.LUCK)) {
             return 2;
+        }
+        for(Entity entity : p.getNearbyEntities(3, 2,3)) {
+            if(entity instanceof ArmorStand) {
+                return 3;
+            }
         }
         return 0;
     }

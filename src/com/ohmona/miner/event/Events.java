@@ -8,12 +8,14 @@ import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.event.PluginMessageEvent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -112,10 +114,27 @@ public class Events implements Listener {
     }
 
     @EventHandler
+    public void disableEquipmentOfCleanZoneArmorStand(PlayerArmorStandManipulateEvent e) {
+        ArmorStand armorStand = e.getRightClicked();
+
+        if(armorStand.getName().equals("CleanZoneArmorStand")) {
+            e.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void disableCleanZoneBlockRecipe(CraftItemEvent e) {
+        ItemStack item = e.getCurrentItem();
+        if(item.getType().equals(Material.LIME_CONCRETE_POWDER)) {
+            if(!item.hasItemMeta()) {
+                e.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
     public void onHelmetPlace(BlockPlaceEvent e) {
-        Player p = e.getPlayer();
         Block b = e.getBlockPlaced();
-        //p.sendMessage("hi");
         if(b.getType().equals(Material.CARVED_PUMPKIN)) {
             e.setCancelled(true);
         }
