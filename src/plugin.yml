@@ -1,7 +1,8 @@
 name: miner
-version: 1.4.0
+version: 1.4.1
 main: com.ohmona.miner.Main
 author: ohmona
 api-version: 1.13
 commands:
-  rule:
+  min:
+    description: useful things

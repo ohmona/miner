@@ -81,7 +81,7 @@ public class HeightSystem implements Listener {
 
             Entity armorStand;
 
-            armorStand = w.spawnEntity(new Location(w, x + 0.5, y + 3, z + 0.5), EntityType.ARMOR_STAND);
+            armorStand = w.spawnEntity(new Location(w, x + 0.5, y, z + 0.5), EntityType.ARMOR_STAND);
             if (armorStand instanceof ArmorStand) {
                 ((ArmorStand) armorStand).setVisible(false);
                 armorStand.setGravity(false);
@@ -111,7 +111,7 @@ public class HeightSystem implements Listener {
             double x = loc.getX();
             double y = loc.getY();
             double z = loc.getZ();
-            Location armorStandLocation = new Location(w, x + 0.5, y + 3, z + 0.5);
+            Location armorStandLocation = new Location(w, x + 0.5, y, z + 0.5);
 
             w.dropItemNaturally(loc, cleanZone);
 
@@ -131,8 +131,6 @@ public class HeightSystem implements Listener {
             // helmet system
             // check pumpkin
             if (hasPlayerProtection(p)) {
-                // remove debuff
-                removeEffect(p);
                 // send title
                 p.sendTitle("", ChatColor.GRAY + "warning", 0, 7000, 0);
 
@@ -151,12 +149,16 @@ public class HeightSystem implements Listener {
                     }
                     // good helmet
                     else if (meta.getDisplayName().equals(ChatColor.GOLD + "helmet")) {
+                        removeEffect(p);
                         p.removePotionEffect(PotionEffectType.SLOW);
                         p.removePotionEffect(PotionEffectType.BLINDNESS);
                         p.removePotionEffect(PotionEffectType.SLOW_DIGGING);
 
                         p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 1000, 3));
                         p.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 1000, 3));
+                    }
+                    else {
+                        removeEffect(p);
                     }
                 }
                 else if (getTypeOfProtection(p) == 2) {
@@ -169,7 +171,7 @@ public class HeightSystem implements Listener {
             } else if (!hasPlayerProtection(p)) {
                 // effect
                 removeEffect(p);
-                p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20, 1));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20, 5));
 
                 p.sendTitle(ChatColor.DARK_GREEN + "You're too high", ChatColor.GRAY + "warning", 0, 7000, 20);
                 if (p.getHealth() <= 1) {
@@ -191,7 +193,9 @@ public class HeightSystem implements Listener {
         else if (p.hasPotionEffect(PotionEffectType.LUCK)) {
             return true;
         }
-        for(Entity entity : p.getNearbyEntities(3.5, 2,3.5)) {
+        World w = p.getWorld();
+        Location loc = new Location(w, p.getLocation().getX(), p.getLocation().getY() - 1, p.getLocation().getZ());
+        for(Entity entity : w.getNearbyEntities(loc, 3.2,2,3.2)) {
             if(entity instanceof ArmorStand) {
                 return true;
             }
@@ -217,7 +221,9 @@ public class HeightSystem implements Listener {
             else if (p.hasPotionEffect(PotionEffectType.LUCK)) {
                 return 2;
             }
-            for(Entity entity : p.getNearbyEntities(3.5, 2,3.5)) {
+            World w = p.getWorld();
+            Location loc = new Location(w, p.getLocation().getX(), p.getLocation().getY() - 1, p.getLocation().getZ());
+            for(Entity entity : w.getNearbyEntities(loc, 3.2,2,3.2)) {
                 if(entity instanceof ArmorStand) {
                     return 3;
                 }
@@ -226,7 +232,9 @@ public class HeightSystem implements Listener {
         else if (p.hasPotionEffect(PotionEffectType.LUCK)) {
             return 2;
         }
-        for(Entity entity : p.getNearbyEntities(3, 2,3)) {
+        World w = p.getWorld();
+        Location loc = new Location(w, p.getLocation().getX(), p.getLocation().getY() - 1, p.getLocation().getZ());
+        for(Entity entity : w.getNearbyEntities(loc, 3.2,2,3.2)) {
             if(entity instanceof ArmorStand) {
                 return 3;
             }

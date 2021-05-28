@@ -19,7 +19,8 @@ public class Commands implements CommandExecutor {
 
         Player p = (Player)sender;
 
-        giveGuidBook(p);
+        p.sendMessage("Guidebook is currently disabled");
+        // giveGuidBook(p);
 
         return true;
     }
@@ -35,13 +36,13 @@ public class Commands implements CommandExecutor {
         bookMeta.setAuthor("ohmona");
 
         pages.add(0, "Miner plugin"  +
-                nl+"author : ohmona" +
-                nl+
-                nl+"after 1.17, Minecraft will be" +
-                nl+"changed forever" +
+                nl +"author : ohmona" +
                 nl +
-                nl + "we need to spend more time" +
-                nl + "in cave" +
+                nl +
+                nl +
+                nl +
+                nl +
+                nl +
                 nl +
                 nl + "hope you enjoy :)");
         pages.add(1,"Basic System" +
@@ -61,10 +62,10 @@ public class Commands implements CommandExecutor {
                 nl + "-------------------" +
                 nl +
                 nl + "Default Helmet :" +
-                nl + "You'll get Default Helmet when" +
+                nl + "You'll get [Default Helmet] when" +
                 nl + "you join in server first time" +
                 nl +
-                nl + "If you wear this over Y 35" +
+                nl + "But with [default helmet]," +
                 nl + "you'll get some debuffs" +
                 nl +
                 nl + "Normal Helmet :" +

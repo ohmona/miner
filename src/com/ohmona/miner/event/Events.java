@@ -56,7 +56,6 @@ public class Events implements Listener {
         w.setGameRule(GameRule.RANDOM_TICK_SPEED, 5);
         w.setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
         w.setTime(20000);
-        w.setDifficulty(Difficulty.HARD);
 
         if(!p.hasPlayedBefore()) {
             p.teleport(loc);
