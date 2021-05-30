@@ -28,17 +28,19 @@ public class HeightSystem implements Listener {
         plugin = MainPlugin;
     }
 
+    private static int heightLimit;
+
     @EventHandler
     public void onPlayerIsOverY35(PlayerMoveEvent e) {
         Player p = e.getPlayer();
         Location loc = e.getPlayer().getLocation();
 
         // player is over 35 and in overworld
-        if(loc.getY() > 35 && p.getWorld().getName().endsWith("world")) {
+        if(loc.getY() > heightLimit && p.getWorld().getName().endsWith("world")) {
             defaultProtectionSystem(p);
         }
         // player is under 35 and in overworld
-        else if(loc.getY() <= 35 && p.getWorld().getName().endsWith("world")) {
+        else if(loc.getY() <= heightLimit && p.getWorld().getName().endsWith("world")) {
             p.removePotionEffect(PotionEffectType.SLOW);
             p.removePotionEffect(PotionEffectType.BLINDNESS);
             p.removePotionEffect(PotionEffectType.SLOW_DIGGING);
@@ -240,6 +242,13 @@ public class HeightSystem implements Listener {
             }
         }
         return 0;
+    }
+
+    public int getHeightLimit() {
+        return this.heightLimit;
+    }
+    public void setHeightLimit(int limit) {
+        this.heightLimit = limit;
     }
 
 }

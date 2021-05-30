@@ -1,55 +1,50 @@
 package com.ohmona.miner.command;
 
 import com.ohmona.miner.Main;
-import net.md_5.bungee.api.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import com.ohmona.miner.event.Events;
+import com.ohmona.miner.event.HeightSystem;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.UUID;
 
-public class Config implements CommandExecutor {
+public class Config {
 
     public static Main plugin;
     public static void setPlugin(Main MainPlugin) { plugin = MainPlugin; }
-    public final File f  = new File(plugin.getDataFolder(), "config.txt");
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if(sender instanceof Player) {
-            Player p = (Player) sender;
+    public File f;
 
-            if(args.length == 0) {
-                p.sendMessage(ChatColor.RED + "command list : ...");
-            }
-            switch (args[0]) {
-                case "height": {
+    public Config() {
+        plugin.saveConfig();
 
-                    try {
-                        plugin.consol.sendMessage(ChatColor.GREEN + "config saved");
-                        FileWriter writer = new FileWriter(f, false); // Map to File
-                        writer.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+        f = new File(plugin.getDataFolder(), "config.yml");
 
-                    break;
-                }
-                default: {
-                    p.sendMessage(ChatColor.RED + "command list : ...");
-                }
-            }
+        if(f.length() == 0) {
+            plugin.getConfig().options().copyDefaults(true);
+            plugin.saveConfig();
         }
-        return false;
     }
+
+    public void setHeightLimit(int limit) {
+        new HeightSystem().setHeightLimit(limit);
+    }
+
+    public void setDefaultHeightLimit() {
+        String dummyHeight = plugin.getConfig().getString("height");
+        int newLimit = Integer.parseInt(dummyHeight);
+        new HeightSystem().setHeightLimit(newLimit);
+    }
+    public int getDefaultHeightLimit() {
+        String dummyHeight = plugin.getConfig().getString("height");
+        int newLimit = Integer.parseInt(dummyHeight);
+        return newLimit;
+    }
+
 
     public void makeFile(File f) {
         if (!f.exists() || !f.isFile()) {
             try {
+                System.out.println("File generated");
                 f.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();

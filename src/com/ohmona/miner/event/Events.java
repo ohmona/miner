@@ -73,25 +73,6 @@ public class Events implements Listener {
             createSpawn.createspawnarea(overW);
         }
     }
-    // compass
-    /*@EventHandler
-    public void onItemHeld(PlayerItemHeldEvent e) {
-        Player p = e.getPlayer();
-        Location loc = p.getLocation();
-        Inventory inv = p.getInventory();
-        ItemStack item = inv.getItem(e.getNewSlot());
-        int Xaxis = (int)loc.getX();
-        int Yaxis = (int)loc.getY();
-        int Zaxis = (int)loc.getZ();
-
-        if(item.getType().equals(Material.COMPASS)) {
-            String message = ChatColor.RED + "" + ChatColor.BOLD + "X : " + Xaxis + ChatColor.YELLOW + "" + ChatColor.BOLD + " Y : " + Yaxis + ChatColor.BLUE + "" + ChatColor.BOLD +" Z : " + Zaxis;
-            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
-        }
-        else {
-            p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(""));
-        }
-    }*/
 
     @EventHandler
     public void onRespawn(PlayerRespawnEvent e) {
@@ -102,7 +83,6 @@ public class Events implements Listener {
         Location loc = new Location(world, 0.5, 20, 0.5);
 
         if(!e.isBedSpawn() && !e.isAnchorSpawn()) {
-            //p.sendMessage("respawn");
             e.setRespawnLocation(loc);
             p.teleport(loc);
         }
