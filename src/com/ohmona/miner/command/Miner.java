@@ -1,10 +1,7 @@
 package com.ohmona.miner.command;
 
 import com.ohmona.miner.Items;
-import com.ohmona.miner.Main;
 import com.ohmona.miner.event.Events;
-import com.ohmona.miner.event.HeightSystem;
-import net.md_5.bungee.protocol.packet.Chat;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -56,21 +53,37 @@ public class Miner implements CommandExecutor {
                             switch (args[1]) {
                                 case "height": {
 
-                                    if(new Events().isNumeric(args[2])) {
+                                    if(Events.isNumeric(args[2])) {
                                         String args2 = args[2];
                                         int limit = Integer.parseInt(args2);
                                         if(limit <= 0) {
-                                            new Config().setDefaultHeightLimit();
-                                            p.sendMessage(ChatColor.GOLD + "Limit successfully changed!" + ChatColor.RED + " New limit : " + ChatColor.WHITE + new Config().getDefaultHeightLimit());
+                                            Config.setDefaultHeightLimit();
+                                            sendLimitChangeMessage(p, Config.getDefaultHeightLimit());
                                             break;
                                         }
-                                        new Config().setHeightLimit(limit);
-                                        p.sendMessage(ChatColor.GOLD + "Limit successfully changed!" + ChatColor.RED + " New limit : " + ChatColor.WHITE + args2);
+                                        Config.setHeightLimit(limit);
+                                        sendLimitChangeMessage(p, Integer.parseInt(args2));
                                         break;
                                     }
                                     else if(args[2].equals("default")) {
-                                        new Config().setDefaultHeightLimit();
-                                        p.sendMessage(ChatColor.GOLD + "Limit successfully changed!" + ChatColor.RED + " New limit : " + ChatColor.WHITE + new Config().getDefaultHeightLimit());
+                                        if(args.length > 3) {
+                                            if (Events.isNumeric(args[3])) {
+                                                int limit = Integer.parseInt(args[3]);
+                                                Config.changeDefaultHeightLimit(limit);
+                                                sendDefaultLimitChangeMessage(p, limit);
+                                                break;
+                                            }
+                                            else if(args[3].equals("<number>")) {
+                                                sendHowToChangeDefaultLimit(p);
+                                                break;
+                                            }
+                                        }
+                                        Config.setDefaultHeightLimit();
+                                        sendLimitChangeMessage(p, Config.getDefaultHeightLimit());
+                                        break;
+                                    }
+                                    else if(args[2].equals("<number>")) {
+                                        sendHowToChangeLimit(p);
                                         break;
                                     }
                                     System.out.println("Somthing went wrong");
@@ -94,6 +107,7 @@ public class Miner implements CommandExecutor {
                 }
             }
             else {
+                p.sendMessage(ChatColor.DARK_RED + "only operators are allowed to use this command!");
                 return true;
             }
         }
@@ -102,4 +116,35 @@ public class Miner implements CommandExecutor {
             return true;
         }
     }
+
+    public void sendLimitChangeMessage(Player p, int newlimit) {
+        p.sendMessage(ChatColor.GOLD + "Limit successfully changed!"
+                + ChatColor.RED + " New limit : "
+                + ChatColor.WHITE + newlimit);
+    }
+    public void sendDefaultLimitChangeMessage(Player p, int newlimit) {
+        p.sendMessage(ChatColor.GOLD + "Default limit successfully changed!"
+                + ChatColor.RED + " New default limit : "
+                + ChatColor.WHITE + newlimit
+                + "\n"
+                + ChatColor.GOLD + "Please use command "
+                + ChatColor.RED + "/min config height default "
+                + "\n"
+                + ChatColor.GOLD + "to change height limit into default");
+    }
+    public void sendHowToChangeLimit(Player p) {
+        p.sendMessage(ChatColor.GOLD + "you can type Integer value which you would to set as limit" + "\n"
+                + ChatColor.AQUA + "e.g. /min config height 30 "
+                + ChatColor.GOLD + "Limit is now 30");
+    }
+    public void sendHowToChangeDefaultLimit(Player p) {
+        p.sendMessage(ChatColor.GOLD + "you can type Integer value which you would \nto set as default limit, but you have to use" + "\n"
+                + ChatColor.RED + "/min config height default "
+                + ChatColor.GOLD + "again to change in game limit\n"
+                + ChatColor.GOLD + "new value will be saved in config.yml file" + "\n"
+                + ChatColor.AQUA + "e.g. /min config height default 30 "
+                + ChatColor.GOLD + "Default Limit is now 30");
+    }
+
+
 }

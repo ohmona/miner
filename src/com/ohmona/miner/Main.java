@@ -1,11 +1,11 @@
 package com.ohmona.miner;
 
-import com.ohmona.miner.command.Commands;
 import com.ohmona.miner.command.Config;
 import com.ohmona.miner.command.Miner;
 import com.ohmona.miner.command.tabcompleter.MinerTab;
 import com.ohmona.miner.event.Events;
 import com.ohmona.miner.event.HeightSystem;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.ConsoleCommandSender;
@@ -18,7 +18,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onEnable() {
 
-        consol.sendMessage(ChatColor.AQUA + "[Miner]플러그인 활성화 중 입니다.");
+        consol.sendMessage(ChatColor.AQUA + "[Miner] 플러그인 활성화 중 입니다.");
         Events.setPlugin(this);
         HeightSystem.setPlugin(this);
         Config.setPlugin(this);

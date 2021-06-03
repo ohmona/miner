@@ -21,7 +21,7 @@ public class Recipes {
         helmetRecipe.shape("%*%","^M^","BHB");
         helmetRecipe.setIngredient('*', Material.DIAMOND);
         helmetRecipe.setIngredient('%', Material.BLACK_STAINED_GLASS);
-        helmetRecipe.setIngredient('^', Material.BLACK_CONCRETE);
+        helmetRecipe.setIngredient('^', Material.OBSIDIAN);
         helmetRecipe.setIngredient('B', Material.ORANGE_WOOL);
         helmetRecipe.setIngredient('M', Material.MILK_BUCKET);
         helmetRecipe.setIngredient('H', Material.HONEYCOMB);
@@ -67,13 +67,14 @@ public class Recipes {
 
         //
         cleanZoneRecipe = new ShapedRecipe(items.cleanZone);
-        cleanZoneRecipe.shape("eod","ogo","mon");
+        cleanZoneRecipe.shape("eod","bgb","mon");
         cleanZoneRecipe.setIngredient('o', Material.OBSIDIAN);
         cleanZoneRecipe.setIngredient('e', Material.ENDER_EYE);
-        cleanZoneRecipe.setIngredient('d', Material.DIAMOND_ORE);
-        cleanZoneRecipe.setIngredient('g', Material.GHAST_TEAR);
+        cleanZoneRecipe.setIngredient('d', Material.EMERALD);
+        cleanZoneRecipe.setIngredient('g', Material.LIME_STAINED_GLASS);
         cleanZoneRecipe.setIngredient('m', Material.MILK_BUCKET);
         cleanZoneRecipe.setIngredient('n', Material.NAUTILUS_SHELL);
+        cleanZoneRecipe.setIngredient('b', Material.DIAMOND_BLOCK);
     }
 
 }

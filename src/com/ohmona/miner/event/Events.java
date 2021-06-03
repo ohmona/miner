@@ -1,11 +1,8 @@
 package com.ohmona.miner.event;
 
-import com.ohmona.miner.Main;
 import com.ohmona.miner.command.Commands;
 import com.ohmona.miner.event.spawn.CreateSpawn;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.event.PluginMessageEvent;
+import com.ohmona.miner.Main;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
@@ -13,21 +10,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityPotionEffectEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.PotionMeta;
-import org.bukkit.potion.Potion;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.util.Vector;
-
-import java.awt.*;
-import java.util.UUID;
 
 public class Events implements Listener {
 
@@ -119,8 +105,7 @@ public class Events implements Listener {
         }
     }
 
-    // 문자열이 숫자로 이루어져 있는지 확인
-    public boolean isNumeric(String str) {
+    public static boolean isNumeric(String str) {
         // null or empty
         if (str == null || str.length() == 0) {
             return false;

@@ -5,4 +5,3 @@ author: ohmona
 api-version: 1.13
 commands:
   min:
-    description: useful things

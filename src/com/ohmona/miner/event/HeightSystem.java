@@ -1,6 +1,8 @@
 package com.ohmona.miner.event;
 
 import com.ohmona.miner.Main;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -70,7 +72,7 @@ public class HeightSystem implements Listener {
     }
 
     @EventHandler
-    public void onCleanZonePleace(BlockPlaceEvent e) {
+    public void onCleanZonePlace(BlockPlaceEvent e) {
         Player p = e.getPlayer();
         Block b = e.getBlockPlaced();
 
@@ -134,7 +136,8 @@ public class HeightSystem implements Listener {
             // check pumpkin
             if (hasPlayerProtection(p)) {
                 // send title
-                p.sendTitle("", ChatColor.GRAY + "warning", 0, 7000, 0);
+                sendWarning(p);
+                p.sendTitle("","",0,0,0);
 
                 if (getTypeOfProtection(p) == 1) {
 
@@ -169,13 +172,12 @@ public class HeightSystem implements Listener {
                 else if (getTypeOfProtection(p) == 3) {
                     removeEffect(p);
                 }
-                // 디버그, 원래는 아이템 설명에 쓰기
             } else if (!hasPlayerProtection(p)) {
                 // effect
                 removeEffect(p);
                 p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20, 5));
 
-                p.sendTitle(ChatColor.DARK_GREEN + "You're too high", ChatColor.GRAY + "warning", 0, 7000, 20);
+                sendWarning(p); sendToHigh(p);
                 if (p.getHealth() <= 1) {
                     p.setHealth(0);
                 }
@@ -227,7 +229,9 @@ public class HeightSystem implements Listener {
             Location loc = new Location(w, p.getLocation().getX(), p.getLocation().getY() - 1, p.getLocation().getZ());
             for(Entity entity : w.getNearbyEntities(loc, 3.2,2,3.2)) {
                 if(entity instanceof ArmorStand) {
-                    return 3;
+                    if(entity.getCustomName().equals("CleanZoneArmorStand") && ((ArmorStand) entity).isInvisible()) {
+                        return 3;
+                    }
                 }
             }
         }
@@ -238,7 +242,9 @@ public class HeightSystem implements Listener {
         Location loc = new Location(w, p.getLocation().getX(), p.getLocation().getY() - 1, p.getLocation().getZ());
         for(Entity entity : w.getNearbyEntities(loc, 3.2,2,3.2)) {
             if(entity instanceof ArmorStand) {
-                return 3;
+                if(entity.getCustomName().equals("CleanZoneArmorStand") && ((ArmorStand) entity).isInvisible()) {
+                    return 3;
+                }
             }
         }
         return 0;
@@ -249,6 +255,14 @@ public class HeightSystem implements Listener {
     }
     public void setHeightLimit(int limit) {
         this.heightLimit = limit;
+    }
+
+    public void sendWarning(Player p) {
+        String msg = ChatColor.GRAY + "" + ChatColor.BOLD + "warning";
+        p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(msg));
+    }
+    public void sendToHigh(Player p) {
+        p.sendTitle("", ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "You're too high", 0, 7000, 20);
     }
 
 }
