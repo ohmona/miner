@@ -2,6 +2,7 @@ package com.ohmona.miner.command;
 
 import com.ohmona.miner.Items;
 import com.ohmona.miner.event.Events;
+import com.ohmona.miner.test.Message;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -138,13 +139,13 @@ public class Miner implements CommandExecutor {
                 + ChatColor.GOLD + "Limit is now 30");
     }
     public void sendHowToChangeDefaultLimit(Player p) {
-        p.sendMessage(ChatColor.GOLD + "you can type Integer value which you would \nto set as default limit, but you have to use" + "\n"
-                + ChatColor.RED + "/min config height default "
-                + ChatColor.GOLD + "again to change in game limit\n"
-                + ChatColor.GOLD + "new value will be saved in config.yml file" + "\n"
-                + ChatColor.AQUA + "e.g. /min config height default 30 "
-                + ChatColor.GOLD + "Default Limit is now 30");
+        p.sendMessage(Message.begin()
+                .attach("you can type Integer value which you would \nto set as default limit, but you have to use\n", ChatColor.GOLD)
+                .attach("/min config height default ", ChatColor.RED)
+                .attach("again to change in game limit\n", ChatColor.GOLD)
+                .attach("new value will be saved in config.yml file" + "\n")
+                .attach("e.g. /min config height default 30 ", ChatColor.AQUA)
+                .attach("Default Limit is now 30", ChatColor.GOLD).end());
     }
-
 
 }

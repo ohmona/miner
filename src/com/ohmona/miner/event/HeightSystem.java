@@ -1,6 +1,7 @@
 package com.ohmona.miner.event;
 
 import com.ohmona.miner.Main;
+import com.ohmona.miner.test.Message;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -258,11 +259,11 @@ public class HeightSystem implements Listener {
     }
 
     public void sendWarning(Player p) {
-        String msg = ChatColor.GRAY + "" + ChatColor.BOLD + "warning";
+        String msg = new Message("warning", ChatColor.GRAY, true).end();
         p.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(msg));
     }
     public void sendToHigh(Player p) {
-        p.sendTitle("", ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "You're too high", 0, 7000, 20);
+        p.sendTitle("", new Message("You're too high", ChatColor.DARK_GREEN, true).end(), 0, 7000, 20);
     }
 
 }

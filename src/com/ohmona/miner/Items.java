@@ -19,6 +19,8 @@ public class Items {
     public ItemStack potion2;
     public ItemStack cleanZone;
 
+    public ItemStack defaultPickaxe;
+
     public Items() {
         //init Item
         helmet = new ItemStack(Material.CARVED_PUMPKIN);
@@ -26,6 +28,7 @@ public class Items {
         potion1 = new ItemStack(Material.POTION);
         potion2 = new ItemStack(Material.POTION);
         cleanZone = new ItemStack(Material.LIME_CONCRETE);
+        defaultPickaxe = new ItemStack(Material.IRON_PICKAXE);
 
         // get meta
         ItemMeta meta = helmet.getItemMeta();
@@ -33,6 +36,7 @@ public class Items {
         PotionMeta posMeta1 = (PotionMeta) potion1.getItemMeta();
         PotionMeta posMeta2 = (PotionMeta) potion2.getItemMeta();
         ItemMeta cleanZoneMeta = cleanZone.getItemMeta();
+        ItemMeta defaultPickaxeMeta = defaultPickaxe.getItemMeta();
 
         // config meta
         meta.setDisplayName(ChatColor.GOLD + "helmet");
@@ -53,12 +57,17 @@ public class Items {
         cleanZoneMeta.setDisplayName(ChatColor.GREEN + "clean zone");
         cleanZoneMeta.addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 10, true);
 
+        defaultPickaxeMeta.setDisplayName(ChatColor.AQUA + "welcome pickaxe");
+        defaultPickaxeMeta.addEnchant(Enchantment.DIG_SPEED, 5, true);
+        defaultPickaxeMeta.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 3, true);
+
         // set meta
         helmet.setItemMeta(meta);
         potion.setItemMeta(posMeta);
         potion1.setItemMeta(posMeta1);
         potion2.setItemMeta(posMeta2);
         cleanZone.setItemMeta(cleanZoneMeta);
+        defaultPickaxe.setItemMeta(defaultPickaxeMeta);
     }
 
 }

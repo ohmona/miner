@@ -1,5 +1,6 @@
 package com.ohmona.miner.event;
 
+import com.ohmona.miner.Items;
 import com.ohmona.miner.command.Commands;
 import com.ohmona.miner.event.spawn.CreateSpawn;
 import com.ohmona.miner.Main;
@@ -49,7 +50,7 @@ public class Events implements Listener {
             createSpawn.createDefaultspawnarea(overW);
 
             p.getInventory().addItem(new ItemStack(Material.OAK_SAPLING, 1));
-            p.getInventory().addItem(new ItemStack(Material.IRON_PICKAXE, 1));
+            p.getInventory().addItem(new Items().defaultPickaxe);
             p.getInventory().addItem(helmet);
 
             cmd.giveGuidBook(p);
